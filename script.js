@@ -1,5 +1,12 @@
 const inventory = [
     {
+        "Category": "Wanker",
+        "Beverage": "Caffe Americano",
+        "Customization": "None",
+        "Size": "Grande",
+        "Calories": 15
+    },
+    {
       "Category": "Classic Espresso Drinks",
       "Beverage": "Caffe Americano",
       "Customization": "None",
@@ -1671,47 +1678,67 @@ const drink = document.querySelector("#drinkselect");
 const custom = document.querySelector("#customselect");
 const size = document.querySelector("#sizeselect");
 
-let setuparray = [];
-for (let i of inventory) {
-    if (!(setuparray.indexOf(i.Category) > -1)) {
-        setuparray.push(i.Category);
-        let myoption = document.createElement("option");
-        myoption.value = i.Category;
-        myoption.textContent = i.Category;
-        cat.appendChild(myoption);
+function updatedropdowns (array) {
+    for (let i of [cat, drink, custom, size]) {
+        i.textContent = "";
+    }
+    let setuparray = [];
+    for (let i of array) {
+        if (!(setuparray.indexOf(i.Category) > -1)) {
+            setuparray.push(i.Category);
+            let myoption = document.createElement("option");
+            myoption.value = i.Category;
+            myoption.textContent = i.Category;
+            cat.appendChild(myoption);
+        }
+    }
+
+    setuparray = [];
+    for (let i of array) {
+        if (!(setuparray.indexOf(i.Beverage) > -1)) {
+            setuparray.push(i.Beverage);
+            let myoption = document.createElement("option");
+            myoption.value = i.Beverage;
+            myoption.textContent = i.Beverage;
+            drink.appendChild(myoption);
+        }
+    }
+
+    setuparray = [];
+    for (let i of array) {
+        if (!(setuparray.indexOf(i.Customization) > -1)) {
+            setuparray.push(i.Customization);
+            let myoption = document.createElement("option");
+            myoption.value = i.Customization;
+            myoption.textContent = i.Customization;
+            custom.appendChild(myoption);
+        }
+    }
+
+    setuparray = [];
+    for (let i of array) {
+        if (!(setuparray.indexOf(i.Size) > -1)) {
+            setuparray.push(i.Size);
+            let myoption = document.createElement("option");
+            myoption.value = i.Size;
+            myoption.textContent = i.Size;
+            size.appendChild(myoption);
+        }
     }
 }
 
-setuparray = [];
-for (let i of inventory) {
-    if (!(setuparray.indexOf(i.Beverage) > -1)) {
-        setuparray.push(i.Beverage);
-        let myoption = document.createElement("option");
-        myoption.value = i.Beverage;
-        myoption.textContent = i.Beverage;
-        drink.appendChild(myoption);
-    }
-}
+updatedropdowns(inventory);
 
-setuparray = [];
-for (let i of inventory) {
-    if (!(setuparray.indexOf(i.Customization) > -1)) {
-        setuparray.push(i.Customization);
-        let myoption = document.createElement("option");
-        myoption.value = i.Customization;
-        myoption.textContent = i.Customization;
-        custom.appendChild(myoption);
-    }
-}
+let eligibledrinks = [];
 
-setuparray = [];
-for (let i of inventory) {
-    if (!(setuparray.indexOf(i.Size) > -1)) {
-        setuparray.push(i.Size);
-        let myoption = document.createElement("option");
-        myoption.value = i.Size;
-        myoption.textContent = i.Size;
-        size.appendChild(myoption);
-    }
-}
 
+cat.addEventListener("input", function () {
+    eligibledrinks = [];
+    for (let i of inventory) {
+        if (i.Category == cat.value) {
+            eligibledrinks.push(i);
+        }
+    }
+    console.log(eligibledrinks);
+    updatedropdowns(eligibledrinks);
+})
